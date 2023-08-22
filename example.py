@@ -13,7 +13,7 @@ result = bert_embedding(sentences)
 first_sentence = result[0]
 
 first_token_in_first_sentence = first_sentence[1]
-print(np.mean(first_token_in_first_sentence[1])
+print(np.mean(first_token_in_first_sentence[1]))
 # array([ 0.4805648 ,  0.18369392, -0.28554988, ..., -0.01961522,
 #        1.0207764 , -0.67167974], dtype=float32)
 print(first_token_in_first_sentence[1].shape)
