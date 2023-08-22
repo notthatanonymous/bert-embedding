@@ -1,25 +1,54 @@
 language: python
-cache: pip
-python:
-  - '3.4'
-  - '3.5'
-  - '3.6'
+jobs:
+  include:
+    - name: "Python 3.8 on Xenial linux"
+      python: 3.8
+      os: linux
+      dist: xenial
+      arch: amd64
+    # - name: "Python 3.6 on Xenial linux"
+    #   python: 3.6
+    #   os: linux
+    #   dist: xenial
+    #   arch: amd64
+    # - name: "Python 3.7 on Xenial linux"
+    #   python: 3.7
+    #   os: linux
+    #   dist: xenial
+    #   arch: amd64
+    # - name: "Python 3.7 on Bionic linux"
+    #   python: 3.7
+    #   os: linux
+    #   dist: bionic
+    #   arch: amd64
+    # - name: "Python 3.7 on Focal linux"
+    #   python: 3.7
+    #   os: linux
+    #   dist: focal
+    #   arch: amd64
+    # - name: "Python 3.7 on Xenial linux on arm64"
+    #   python: 3.7
+    #   os: linux
+    #   dist: xenial
+    #   arch: arm64
+    # - name: "Python 3.7 on macOS"
+    #   os: osx
+    #   osx_image: xcode11.5  # Python 3.7 running on macOS 10.14.4
+    #   language: shell       # 'language: python' is an error on Travis CI macOS
+    # - name: "Python 3.7 on Windows"
+    #   os: windows           # Windows 10.0.17134 N/A Build 17134
+    #   language: shell       # 'language: python' is an error on Travis CI Windows
+    #   before_install:
+    #     - choco install python --version 3.7.5
+    #     - python -m pip install --upgrade pip
+    #   env: PATH=/c/Python37:/c/Python37/Scripts:$PATH # command to install dependencies
 install:
-  - pip install .
-  - pip install pytest-cov codecov
+  - pip3 install --upgrade pip
+  - pip3 install -r requirements.txt
+  - pip3 install --upgrade setuptools wheel
+  - pip3 install .
 script:
-  - pytest --cov=./bert_embedding
-notifications:
-  email: false
+  - travis_wait 80 python3 example.py || travis_wait 80 python example.py
+
 after_success:
-  - codecov
-deploy:
-  provider: pypi
-  distributions: sdist bdist_wheel
-  user: garylai1990
-  password:
-    secure: wKbQkb4dL7Ops1rhUghg5fleFvyUX9XzZFw1VyEO6qaBfHhsfQg7AnyFMTI7tQZKUHsbFeH7HHk9qS42DQhJGcKmhbqa1dO4rd6XsgYVvhvw0mw/0akeiM5Y8RE8m1KuAUXjLgtv1UE4hsPJ5BnbYbZTG3cOYh3E6/BgwqLD2Q5cUjUg0sFhdWUQOncdicUdviUlw6rQ51RKW1lAP5fGFXUwe79A0KebHY7lJqvemkm+0d4n2JxNc6mNj7EpuWExlK5eQcqwd1pvaLuazIOIkL6JZ8nZovROBiSBcgauF/khSKABNb6YYV8jMvMBo61682I+7fO81EzXDnHx1n7/SNj+OUbikiUMr4tbbg4dd1A7o+6ibojknWSaAIAp6kCtjNdEf97i9RAB52oaWJJ9PYVlFR5aU2LYppyqhwrbfq0HAMxnOcPrjOcrSaqck+uop3J5avf8a8LkC3NSKUI51SEGnjrFbra7y0ztxYHyCmnPNqYCdqXOloHl+Rg0JBObnEIWnOEKYFSgah3W4c4UBLurGZyorzW2Kq9+cUGRflEYRzJwLKu8uNCADXcd6OtpGhR9E9/0Jw/HNGMOjOY+ero5MJfYi5vLMQxOlj4MCGc513PAOAsvq9whsT/3maRArICp6ri2sUK4UAZYL1hBfviI7BfdhDymL1VrOo0jo0Y=
-  on:
-    repo: imgarylai/bert-embedding
-    python: 3.5
-    branch: master
+  - echo "Successfull."
