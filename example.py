@@ -1,4 +1,5 @@
 from bert_embedding import BertEmbedding
+import numpy as np
 
 bert_abstract = """We introduce a new language representation model called BERT, which stands for Bidirectional Encoder Representations from Transformers.
  Unlike recent language representation models, BERT is designed to pre-train deep bidirectional representations by jointly conditioning on both left and right context in all layers.
@@ -11,16 +12,8 @@ result = bert_embedding(sentences)
 
 first_sentence = result[0]
 
-print(first_sentence[0])
-# ['we', 'introduce', 'a', 'new', 'language', 'representation', 'model', 'called', 'bert', ',', 'which', 'stands', 'for', 'bidirectional', 'encoder', 'representations', 'from', 'transformers']
-print(len(first_sentence[0]))
-# 18
-
-
-print(len(first_sentence[1]))
-# 18
 first_token_in_first_sentence = first_sentence[1]
-first_token_in_first_sentence[1]
+print(np.mean(first_token_in_first_sentence[1])
 # array([ 0.4805648 ,  0.18369392, -0.28554988, ..., -0.01961522,
 #        1.0207764 , -0.67167974], dtype=float32)
 print(first_token_in_first_sentence[1].shape)
